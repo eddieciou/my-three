@@ -1,4 +1,6 @@
 import * as Three from 'three';
+// 導入軌道控制器
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { useEffect } from 'react';
 
 const App = () => {
@@ -29,13 +31,25 @@ const App = () => {
 
 		// 設定相機位置
 		camera.position.z = 5;
+		camera.position.y = 2;
+		camera.position.x = 2;
 		camera.lookAt(0, 0, 0);
+
+		// 添加世界座標輔助器
+		const axesHelper = new Three.AxesHelper(5);
+		scene.add(axesHelper);
+
+		// 添加軌道控制器
+		const controls = new OrbitControls(camera, renderer.domElement);
+		// 軌道控制器添加慣性
+		controls.enableDamping = true;
 
 		// 渲染函數
 		const animate = () => {
+			controls.update();
 			requestAnimationFrame(animate);
-			cube.rotation.x += 0.01;
-			cube.rotation.y += 0.01;
+			// cube.rotation.x += 0.01;
+			// cube.rotation.y += 0.01;
 
 			// 渲染
 			renderer.render(scene, camera);
