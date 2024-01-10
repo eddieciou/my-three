@@ -25,9 +25,18 @@ const App = () => {
 		const geometry = new Three.BoxGeometry(1, 1, 1);
 		// 創建材質
 		const material = new Three.MeshBasicMaterial({ color: 0x00ff00 });
+		const parentMaterial = new Three.MeshBasicMaterial({ color: 0xff0000 });
+
+		// 建立父模塊
+		const parentCube = new Three.Mesh(geometry, parentMaterial);
 		// 創建網格
 		const cube = new Three.Mesh(geometry, material);
-		scene.add(cube);
+		parentCube.add(cube);
+
+		scene.add(parentCube);
+
+		parentCube.position.set(-3, 0, 0);
+		cube.position.set(3, 0, 0);
 
 		// 設定相機位置
 		camera.position.z = 5;
